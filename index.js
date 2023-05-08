@@ -1,7 +1,16 @@
 const app = require('express')()
-
-let Url = "https://code-editor-backend-o1fg.onrender.com"
+const axios = require('axios')
+require('dotenv').config()
+let Url = "https://code-editor-backend-o1fg.onrender.com/"
 let port = process.env.PORT || 3000
+
+// list of urls to keep the server alive
+let urls = [
+    "https://code-editor-backend-o1fg.onrender.com/",
+    process.env.OTHER
+]
+
+console.log(urls);
 
 // store the time when the server starts
 let time = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
@@ -13,11 +22,17 @@ app.get('/', (req, res) => {
 
 // call this function every 5 mins to keep the server alive
 setInterval(() => {
-    fetch(Url)
-        .then(res => res.text())
-        .then(body => { console.log(body); ++calls; })
-        .catch(err => console.log(err))
-}, 3000)
+    urls.forEach(url => {
+        axios.get(url)
+            .then(res => {
+                console.log("pinged " + url)
+                ++calls
+            })
+            .catch(err => {
+                console.log("error pinging " + url)
+            })
+    })
+}, 30000)
 
 app.listen(port, () => {
     console.log("server running on port " + port)
