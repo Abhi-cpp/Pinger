@@ -17,7 +17,7 @@ setInterval(() => {
         .then(res => res.text())
         .then(body => { console.log(body); ++calls; })
         .catch(err => console.log(err))
-}, 300000)
+}, 3000)
 
 app.listen(port, () => {
     console.log("server running on port " + port)
