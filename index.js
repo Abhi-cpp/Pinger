@@ -32,7 +32,8 @@ setInterval(() => {
                 console.log("error pinging " + url)
             })
     })
-}, 30000)
+}, 300000)
+// every 5 mins
 
 app.listen(port, () => {
     console.log("server running on port " + port)
