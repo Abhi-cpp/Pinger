@@ -1,0 +1,15 @@
+{
+  "name": "wake",
+  "version": "1.0.0",
+  "description": "Prevent my free apps from slepping.",
+  "main": "index.js",
+  "scripts": {
+    "run": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abhishek Kumar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
