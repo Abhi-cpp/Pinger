@@ -37,7 +37,7 @@ const pingSchema = new mongoose.Schema({
         required: true,
         trim: true,
         // 1 minute minimum
-        min: 10000,
+        min: 60000,
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,

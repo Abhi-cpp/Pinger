@@ -12,9 +12,6 @@ app.use(userRouter)
 app.use(pingRouter)
 app.use(exect)
 
-// store the time when the server starts
-
-
 
 DBConnect().then(() => {
     console.log("connected to database")

@@ -1,4 +1,3 @@
-const ping = require('./DB/schema/ping');
 const Ping = require('./DB/schema/ping')
 const axios = require('axios')
 const Router = require('express').Router
@@ -76,7 +75,8 @@ setInterval(() => {
     tmp.forEach((element) => {
         Ping.findById(element.id).then((ping) => {
             console.log(element);
-            // element.output = element.output.toString();
+            if (element.output.length > 1000)
+                element.output = "output too large to store";
             ping.pingData.push(element);
             ping.save();
         }).catch((e) => {
@@ -120,3 +120,13 @@ router.get('/status', (req, res) => {
 
 module.exports = router;
 
+// self loop to keep awake it's self
+// every 5 mins
+const other = process.env.OTHER
+setInterval(() => {
+    axios.get(other).then((response) => {
+        console.log("pinged " + other)
+    }).catch((e) => {
+        console.log(e.message)
+    })
+},300000);
