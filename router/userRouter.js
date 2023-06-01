@@ -55,8 +55,8 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 // delete user by id
 router.delete('/users/me', auth, async (req, res) => {
     try {
-        await req.user.remove()
-        deleteAck(req.user.email, req.user.name)
+        await User.deleteOne({ _id: req.user._id })
+        // await User.findByIdAndDelete(req.user._id)
         res.status(200).send(req.user)
     } catch (e) {
         console.log(e)

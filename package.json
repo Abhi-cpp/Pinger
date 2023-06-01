@@ -1,5 +1,5 @@
 {
-  "name": "ping",
+  "name": "pinger",
   "version": "1.0.0",
   "description": "Prevent my free apps from slepping.",
   "main": "index.js",

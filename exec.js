@@ -2,6 +2,7 @@ const Ping = require('./DB/schema/ping')
 const axios = require('axios')
 const Router = require('express').Router
 const router = new Router()
+
 // get the ping data function
 async function fetchPingData() {
     try {
@@ -30,7 +31,7 @@ setInterval(() => {
 }, 900000);
 
 
-// ping the urls at their respective delays
+//! ping the urls at their respective delays
 
 
 // create a queue data structure
@@ -50,7 +51,7 @@ pinglist.then((resolvedPinglist) => {
                 tmp.output = response.data;
                 tmp.statusCode = response.status;
                 queue.push(tmp);
-                // console.log(tmp)
+                console.log(tmp)
                 ++calls;
             }
             ).catch((e) => {
@@ -59,7 +60,7 @@ pinglist.then((resolvedPinglist) => {
                 tmp.responseTime = new Date().getTime() - tmp.responseTime;
                 tmp.statusCode = e.status;
                 queue.push(tmp);
-                // console.log(tmp)
+                console.log(tmp);
                 ++calls;
             }
             )
@@ -71,6 +72,7 @@ pinglist.then((resolvedPinglist) => {
 // after every 5 mins, store the queue in the database
 setInterval(() => {
     let tmp = queue;
+    tmp.reverse();
     queue = [];
     tmp.forEach((element) => {
         Ping.findById(element.id).then((ping) => {
@@ -83,7 +85,7 @@ setInterval(() => {
             console.log(e);
         })
     });
-}, 300000);
+}, 3000);
 
 
 // public access routes
@@ -121,12 +123,12 @@ router.get('/status', (req, res) => {
 module.exports = router;
 
 // self loop to keep awake it's self
-// every 5 mins
-const other = process.env.OTHER
-setInterval(() => {
-    axios.get(other).then((response) => {
-        console.log("pinged " + other)
-    }).catch((e) => {
-        console.log(e.message)
-    })
-},300000);
+// every 2 mins
+// const other = process.env.OTHER
+// setInterval(() => {
+//     axios.get(other).then((response) => {
+//         // console.log("pinged " + other)
+//     }).catch((e) => {
+//         console.log(e.message)
+//     })
+// }, 120000);

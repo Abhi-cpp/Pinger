@@ -1,8 +1,10 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
+const Ping = require('./ping')
 
 const jwt = require('jsonwebtoken')
+
 const userSchema = new mongoose.Schema({
     password: {
         type: String,
@@ -77,10 +79,10 @@ userSchema.pre('save', async function (next) {
     next();
 })
 
-//delete user task when user is removed
-userSchema.pre('remove', async function (next) {
-    const user = this
-    await Task.deleteMany({ owner: user._id })
+
+userSchema.pre('deleteOne', async function (next) {
+    const user = await this.model.findOne(this.getQuery())
+    await Ping.deleteMany({ owner: user._id })
     next()
 })
 

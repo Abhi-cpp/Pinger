@@ -3,7 +3,7 @@ const express = require('express')
 const Router = new express.Router()
 const auth = require('../middleware/auth')
 
-
+// create a new ping
 Router.post('/ping', auth, async (req, res) => {
     const ping = new Ping({
         ...req.body,
@@ -18,6 +18,7 @@ Router.post('/ping', auth, async (req, res) => {
     }
 })
 
+// get all list of pings
 Router.get('/pings', auth, async (req, res) => {
     // send all pings of the user
     try {
@@ -30,7 +31,7 @@ Router.get('/pings', auth, async (req, res) => {
 
 })
 
-
+// update a specific ping
 Router.patch('/ping/:id', auth, async (req, res) => {
     const _id = req.params.id
     const updates = Object.keys(req.body)
@@ -45,6 +46,7 @@ Router.patch('/ping/:id', auth, async (req, res) => {
     }
 })
 
+// delete a ping
 Router.delete('/ping/:id', auth, async (req, res) => {
     const _id = req.params.id
     try {
